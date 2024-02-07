@@ -1,0 +1,11 @@
+multimedia/view/primera_pantalla/images
+multimedia/view/segunda_pantalla/images
+multimedia/view/primera_pantalla/audios
+multimedia/view/segunda_pantalla/audios
+multimedia/view/primera_pantalla/video
+multimedia/view/segunda_pantalla/video
+multimedia/view/primera_pantalla/fonts
+multimedia/view/segunda_pantalla/fonts
+multimedia/node_modules
+multimedia/release-builds
+multimedia/package-lock.json

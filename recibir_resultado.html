@@ -1,0 +1,56 @@
+<style>
+  .genially-view-navigation-actions-container,
+  .genially-view-menu-action,
+  .sc-iwjdpV,
+  .sc-fKVqWL,
+  .tpd-tooltip {
+    opacity: 0;
+    z-index: -1 !important;
+  }
+</style>
+<script>
+  const { ipcRenderer } = require("electron");
+  ipcRenderer.on("resultado", (e, resultado) => {
+    if (resultado != "") {
+      document
+        .querySelector('[data-title="imagenes"]')
+        .style.removeProperty("display");
+      document
+        .querySelectorAll(".genially-view-text")[0]
+        .style.removeProperty("display");
+      document.querySelectorAll(
+        ".genially-view-text"
+      )[0].childNodes[0].childNodes[0].innerHTML = resultado;
+    } else {
+      document.querySelector('[data-title="imagenes"]').style.display = "none";
+      document.querySelectorAll(".genially-view-text")[0].style.display =
+        "none";
+      document.querySelectorAll(
+        ".genially-view-text"
+      )[0].childNodes[0].childNodes[0].innerHTML = "";
+    }
+
+    const inactivityTimeout = 180000; // 3minutos
+
+    let inactivityTimer;
+
+    // Reset the inactivity timer whenever there's user activity
+    function resetInactivityTimer() {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(reloadPage, inactivityTimeout);
+    }
+
+    // Reload the page
+    function reloadPage() {
+      location.reload();
+    }
+
+    // Attach event listeners for user activity
+    document.addEventListener("mousemove", resetInactivityTimer);
+    document.addEventListener("touchmove", resetInactivityTimer);
+    document.addEventListener("keydown", resetInactivityTimer);
+
+    // Initialize the inactivity timer
+    resetInactivityTimer();
+  });
+</script>

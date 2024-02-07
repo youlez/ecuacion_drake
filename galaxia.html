@@ -1,0 +1,85 @@
+<script>
+  if (
+    document.getElementsByClassName("container-wrapper-genially").length != 0
+  ) {
+    document
+      .querySelector('[data-title="punto_1"]')
+      .style.removeProperty("filter");
+    document
+      .querySelector('[data-title="punto_2"]')
+      .style.removeProperty("filter");
+    document
+      .querySelector('[data-title="punto_3"]')
+      .style.removeProperty("filter");
+    try {
+      ipcRenderer.on("valores", (e, valores) => {
+        console.log(valores);
+        if (valores.lugar == "izq") {
+          document.querySelector('[data-title="punto_1"]').style.filter =
+            "drop-shadow(0 0 1rem #FFBE00)";
+          document
+            .querySelector('[data-title="punto_2"]')
+            .style.removeProperty("filter");
+          document
+            .querySelector('[data-title="punto_3"]')
+            .style.removeProperty("filter");
+
+          if (valores.mensaje) {
+            document.querySelector('[data-title="mensaje"]').click();
+          } else {
+            try {
+              document
+                .getElementsByClassName("circle-cancel")[0]
+                .closest("div")
+                .click();
+            } catch {
+              console.log("boton de cerrar no existe");
+            }
+          }
+        }
+        if (valores.lugar == "centro") {
+          document.querySelector('[data-title="punto_2"]').style.filter =
+            "drop-shadow(0 0 1rem #FFBE00)";
+          document
+            .querySelector('[data-title="punto_1"]')
+            .style.removeProperty("filter");
+          document
+            .querySelector('[data-title="punto_3"]')
+            .style.removeProperty("filter");
+          if (valores.mensaje) {
+            document.querySelector('[data-title="mensaje"]').click();
+          } else {
+            try {
+              document
+                .getElementsByClassName("circle-cancel")[0]
+                .closest("div")
+                .click();
+            } catch {
+              console.log("boton de cerrar no existe");
+            }
+          }
+        }
+        if (valores.lugar == "der") {
+          document.querySelector('[data-title="punto_3"]').style.filter =
+            "drop-shadow(0 0 1rem #FFBE00)";
+          document
+            .querySelector('[data-title="punto_1"]')
+            .style.removeProperty("filter");
+          document
+            .querySelector('[data-title="punto_2"]')
+            .style.removeProperty("filter");
+          try {
+            document
+              .getElementsByClassName("circle-cancel")[0]
+              .closest("div")
+              .click();
+          } catch {
+            console.log("boton de cerrar no existe");
+          }
+        }
+      });
+    } catch {
+      console.log("electron no se encuentra");
+    }
+  }
+</script>

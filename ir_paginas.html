@@ -1,0 +1,13 @@
+<script>
+  if (
+    document.getElementsByClassName("container-wrapper-genially").length != 0
+  ) {
+    try {
+      ipcRenderer.on("pagina", (e, pagina) => {
+        document.querySelector('[data-title="' + pagina + '"]').click();
+      });
+    } catch {
+      console.log("electron no se encuentra");
+    }
+  }
+</script>

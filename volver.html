@@ -1,0 +1,11 @@
+<script>
+  if (
+    document.getElementsByClassName("container-wrapper-genially").length != 0
+  ) {
+    try {
+      ipcRenderer.send("resultado", "");
+    } catch {
+      console.log("electron no se encuentra");
+    }
+  }
+</script>

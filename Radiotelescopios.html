@@ -1,0 +1,201 @@
+<script>
+  var izq = false;
+  var centro = true;
+  var der = false;
+  var lugar = "";
+
+  if (
+    document.getElementsByClassName("container-wrapper-genially").length != 0
+  ) {
+    document.querySelector('[data-title="fondo_derecho"]').style.display =
+      "none";
+    document.querySelector('[data-title="fondo_izquierdo"]').style.display =
+      "none";
+
+    document.querySelector('[data-title="enviar"]').style.display = "none";
+    document.querySelector('[data-title="enviar_no"]').style.display = "none";
+
+    ocultar_senales();
+
+    document
+      .querySelector('[data-title="boton_izquierdo"]')
+      .addEventListener("touchstart", function (event) {
+        ocultar_senales();
+        document
+          .querySelector('[data-title="enviar"]')
+          .style.removeProperty("display");
+        document.querySelector('[data-title="enviar_no"]').style.display =
+          "none";
+        if (centro) {
+          lugar = "izq";
+          izq = true;
+          centro = false;
+        } else {
+          if (der) {
+            lugar = "centro";
+            der = false;
+            centro = true;
+          }
+        }
+        der = false;
+        fondos();
+        var valores = { lugar: lugar, mensaje: false };
+        console.log(valores);
+        try {
+          ipcRenderer.send("valores", valores);
+        } catch {
+          console.log("electron no se encuentra");
+        }
+      });
+
+    document
+      .querySelector('[data-title="boton_derecho"]')
+      .addEventListener("touchstart", function (event) {
+        ocultar_senales();
+        if (centro) {
+          lugar = "der";
+          der = true;
+          centro = false;
+          document
+            .querySelector('[data-title="enviar_no"]')
+            .style.removeProperty("display");
+          document.querySelector('[data-title="enviar"]').style.display =
+            "none";
+        } else {
+          if (izq) {
+            lugar = "centro";
+            der = false;
+            centro = true;
+            document
+              .querySelector('[data-title="enviar"]')
+              .style.removeProperty("display");
+            document.querySelector('[data-title="enviar_no"]').style.display =
+              "none";
+          }
+        }
+        izq = false;
+        fondos();
+        var valores = { lugar: lugar, mensaje: false };
+        console.log(valores);
+        try {
+          ipcRenderer.send("valores", valores);
+        } catch {
+          console.log("electron no se encuentra");
+        }
+      });
+
+    document
+      .querySelector('[data-title="enviar"]')
+      .addEventListener("touchstart", function (event) {
+        setTimeout(() => {
+          document
+            .querySelector('[data-title="boton_enviar"]')
+            .addEventListener("touchstart", function (event) {
+              var valores = { lugar: lugar, mensaje: true };
+              console.log(valores);
+              try {
+                ipcRenderer.send("valores", valores);
+              } catch {
+                console.log("electron no se encuentra");
+              }
+              document
+                .getElementsByClassName("circle-cancel")[0]
+                .closest("div")
+                .click();
+              senales();
+            });
+        }, 1000);
+      });
+  }
+  function ocultar_senales() {
+    document.querySelector('[data-title="senal_1"]').style.display = "none";
+    document.querySelector('[data-title="senal_2"]').style.display = "none";
+    document.querySelector('[data-title="senal_3"]').style.display = "none";
+    document.querySelector('[data-title="senal_4"]').style.display = "none";
+    document.querySelector('[data-title="senal_5"]').style.display = "none";
+    document.querySelector('[data-title="senal_6"]').style.display = "none";
+    document.querySelector('[data-title="senal_7"]').style.display = "none";
+    document.querySelector('[data-title="senal_8"]').style.display = "none";
+    document.querySelector('[data-title="senal_9"]').style.display = "none";
+  }
+
+  function fondos() {
+    if (centro) {
+      document.querySelector('[data-title="fondo_derecho"]').style.display =
+        "none";
+      document.querySelector('[data-title="fondo_izquierdo"]').style.display =
+        "none";
+    }
+    if (der) {
+      document
+        .querySelector('[data-title="fondo_derecho"]')
+        .style.removeProperty("display");
+      document.querySelector('[data-title="fondo_izquierdo"]').style.display =
+        "none";
+    }
+    if (izq) {
+      document.querySelector('[data-title="fondo_derecho"]').style.display =
+        "none";
+      document
+        .querySelector('[data-title="fondo_izquierdo"]')
+        .style.removeProperty("display");
+    }
+  }
+
+  function senales() {
+    if (centro) {
+      document.querySelector('[data-title="senal_4"]').style.display = "none";
+      document.querySelector('[data-title="senal_5"]').style.display = "none";
+      document.querySelector('[data-title="senal_6"]').style.display = "none";
+      document.querySelector('[data-title="senal_7"]').style.display = "none";
+      document.querySelector('[data-title="senal_8"]').style.display = "none";
+      document.querySelector('[data-title="senal_9"]').style.display = "none";
+
+      document
+        .querySelector('[data-title="senal_1"]')
+        .style.removeProperty("display");
+      document
+        .querySelector('[data-title="senal_2"]')
+        .style.removeProperty("display");
+      document
+        .querySelector('[data-title="senal_3"]')
+        .style.removeProperty("display");
+    }
+    if (der) {
+      document.querySelector('[data-title="senal_1"]').style.display = "none";
+      document.querySelector('[data-title="senal_2"]').style.display = "none";
+      document.querySelector('[data-title="senal_3"]').style.display = "none";
+      document.querySelector('[data-title="senal_4"]').style.display = "none";
+      document.querySelector('[data-title="senal_5"]').style.display = "none";
+      document.querySelector('[data-title="senal_6"]').style.display = "none";
+
+      document
+        .querySelector('[data-title="senal_7"]')
+        .style.removeProperty("display");
+      document
+        .querySelector('[data-title="senal_8"]')
+        .style.removeProperty("display");
+      document
+        .querySelector('[data-title="senal_9"]')
+        .style.removeProperty("display");
+    }
+    if (izq) {
+      document.querySelector('[data-title="senal_1"]').style.display = "none";
+      document.querySelector('[data-title="senal_2"]').style.display = "none";
+      document.querySelector('[data-title="senal_3"]').style.display = "none";
+      document.querySelector('[data-title="senal_7"]').style.display = "none";
+      document.querySelector('[data-title="senal_8"]').style.display = "none";
+      document.querySelector('[data-title="senal_9"]').style.display = "none";
+
+      document
+        .querySelector('[data-title="senal_4"]')
+        .style.removeProperty("display");
+      document
+        .querySelector('[data-title="senal_5"]')
+        .style.removeProperty("display");
+      document
+        .querySelector('[data-title="senal_6"]')
+        .style.removeProperty("display");
+    }
+  }
+</script>

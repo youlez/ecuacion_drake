@@ -1,0 +1,11 @@
+<script>
+  if (
+    document.getElementsByClassName("container-wrapper-genially").length != 0
+  ) {
+    document.querySelector('[data-title="imagenes"]').style.display = "none";
+    document.querySelectorAll(".genially-view-text")[0].style.display = "none";
+    document.querySelectorAll(
+      ".genially-view-text"
+    )[0].childNodes[0].childNodes[0].innerHTML = "";
+  }
+</script>

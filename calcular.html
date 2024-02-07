@@ -1,0 +1,29 @@
+<script>
+  if (
+    document.getElementsByClassName("container-wrapper-genially").length != 0
+  ) {
+    document
+      .querySelector('[data-title="calcular"]')
+      .addEventListener("touchstart", function (event) {
+        var ne = document.getElementById("ne").value;
+        var Fe = document.getElementById("Fe").value;
+        var L = document.getElementById("L").value;
+        if (ne != "" && Fe != "" && L != "") {
+          ne = parseInt(ne);
+          Fe = parseInt(Fe) / 100;
+          L = parseInt(L);
+          var R = 1.9;
+          var fp = 0.0062;
+          var fl = 0.5;
+          var fi = 0.1;
+          var resultado = R * fp * ne * fl * fi * Fe * L;
+          console.log(resultado);
+          try {
+            ipcRenderer.send("resultado", resultado);
+          } catch {
+            console.log("electron no se encuentra");
+          }
+        }
+      });
+  }
+</script>
