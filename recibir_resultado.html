@@ -1,56 +1,112 @@
 <style>
-  .genially-view-navigation-actions-container,
-  .genially-view-menu-action,
-  .sc-iwjdpV,
-  .sc-fKVqWL,
-  .tpd-tooltip {
-    opacity: 0;
-    z-index: -1 !important;
+  .fade-in-down {
+    animation: fade-in-down 0.5s linear;
+  }
+  @keyframes fade-in-down {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .fade-in {
+    animation: fade-in 2s linear;
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 </style>
 <script>
-  const { ipcRenderer } = require("electron");
-  ipcRenderer.on("resultado", (e, resultado) => {
-    if (resultado != "") {
-      document
-        .querySelector('[data-title="imagenes"]')
-        .style.removeProperty("display");
-      document
-        .querySelectorAll(".genially-view-text")[0]
-        .style.removeProperty("display");
-      document.querySelectorAll(
-        ".genially-view-text"
-      )[0].childNodes[0].childNodes[0].innerHTML = resultado;
-    } else {
-      document.querySelector('[data-title="imagenes"]').style.display = "none";
-      document.querySelectorAll(".genially-view-text")[0].style.display =
-        "none";
-      document.querySelectorAll(
-        ".genially-view-text"
-      )[0].childNodes[0].childNodes[0].innerHTML = "";
+  if (
+    document.getElementsByClassName("container-wrapper-genially").length != 0
+  ) {
+    document
+      .getElementById("texto")
+      .closest(".genially-animated-wrapper").style.display = "none";
+    document
+      .getElementById("resultado")
+      .closest(".genially-animated-wrapper").style.display = "none";
+    document.querySelector('[data-title="imagen"]').style.display = "none";
+    document
+      .getElementById("resultado")
+      .closest(
+        ".genially-view-group"
+      ).childNodes[1].childNodes[0].childNodes[0].childNodes[0].innerHTML = "";
+
+    try {
+      ipcRenderer.on("resultado", (e, resultado) => {
+        console.log(resultado);
+        if (resultado != "") {
+          resultado = Math.round(resultado * 100000) / 100000;
+          console.log(resultado);
+          document
+            .getElementById("resultado")
+            .closest(
+              ".genially-view-group"
+            ).childNodes[1].childNodes[0].childNodes[0].childNodes[0].innerHTML =
+            resultado;
+
+          document
+            .getElementById("texto")
+            .closest(".genially-animated-wrapper")
+            .style.removeProperty("display");
+          document
+            .getElementById("texto")
+            .closest(".genially-animated-wrapper")
+            .classList.add("fade-in-down");
+          document
+            .getElementById("resultado")
+            .closest(".genially-animated-wrapper")
+            .style.removeProperty("display");
+          document
+            .getElementById("resultado")
+            .closest(".genially-animated-wrapper")
+            .classList.add("fade-in");
+          document
+            .querySelector('[data-title="imagen"]')
+            .style.removeProperty("display");
+          document
+            .querySelector('[data-title="imagen"]')
+            .classList.add("fade-in");
+        } else {
+          document
+            .getElementById("texto")
+            .closest(".genially-animated-wrapper").style.display = "none";
+          document
+            .getElementById("resultado")
+            .closest(".genially-animated-wrapper").style.display = "none";
+          document.querySelector('[data-title="imagen"]').style.display =
+            "none";
+          document
+            .getElementById("resultado")
+            .closest(
+              ".genially-view-group"
+            ).childNodes[1].childNodes[0].childNodes[0].childNodes[0].innerHTML =
+            "";
+
+          document
+            .getElementById("texto")
+            .closest(".genially-animated-wrapper")
+            .classList.remove("fade-in-down");
+          document
+            .getElementById("resultado")
+            .closest(".genially-animated-wrapper")
+            .classList.remove("fade-in");
+          document
+            .querySelector('[data-title="imagen"]')
+            .classList.remove("fade-in");
+        }
+      });
+    } catch {
+      console.log("electron no se encuentra");
     }
-
-    const inactivityTimeout = 180000; // 3minutos
-
-    let inactivityTimer;
-
-    // Reset the inactivity timer whenever there's user activity
-    function resetInactivityTimer() {
-      clearTimeout(inactivityTimer);
-      inactivityTimer = setTimeout(reloadPage, inactivityTimeout);
-    }
-
-    // Reload the page
-    function reloadPage() {
-      location.reload();
-    }
-
-    // Attach event listeners for user activity
-    document.addEventListener("mousemove", resetInactivityTimer);
-    document.addEventListener("touchmove", resetInactivityTimer);
-    document.addEventListener("keydown", resetInactivityTimer);
-
-    // Initialize the inactivity timer
-    resetInactivityTimer();
-  });
+  }
 </script>

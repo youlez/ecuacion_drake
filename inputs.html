@@ -1,0 +1,148 @@
+<style>
+  .range-input {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 90%;
+    outline: none;
+    border-radius: 15px;
+    height: 3px;
+    background: #ccc;
+  }
+
+  .range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 15px;
+    width: 15px;
+    background-color: #6df2ed;
+    box-shadow: 0 0 0 10px rgba(109, 242, 237, 0.2);
+    border-radius: 50%;
+    border: none;
+    transition: 0.2s ease-in-out;
+  }
+
+  .value {
+    min-height: 90px;
+    width: 80%;
+    border: 2px #6df2ed solid !important;
+    border-radius: 15px 15px 0 0;
+    background-color: #352967;
+    color: white;
+    font-family: Montserrat, "Source Sans Pro", _fb_;
+    font-weight: bold;
+    font-size: 60px;
+    text-align: center;
+    font-style: italic;
+    margin: 0 auto !important;
+  }
+  .range {
+    width: 300px;
+  }
+  .div-range {
+    width: 100%;
+    margin-top: -5px !important;
+    padding: 30px 0px !important;
+    display: flex;
+    justify-content: center;
+    border: 2px #ff6280 solid !important;
+    background-color: #352967;
+    border-radius: 15px;
+  }
+</style>
+<script></script>
+<div class="range">
+  <div class="value" id="valor_ne"></div>
+  <div class="div-range">
+    <input type="range" min="0" max="4" value="0" id="ne" class="range-input" />
+  </div>
+</div>
+<script>
+  document.getElementById("ne").addEventListener("input", (event) => {
+    const tempSliderValue = event.target.value;
+
+    if (tempSliderValue == 0) {
+      document.getElementById("valor_ne").textContent = "";
+      const progress = 0;
+    } else {
+      document
+        .getElementById("ne")
+        .closest(".range")
+        .style.removeProperty("filter");
+      document.getElementById("valor_ne").textContent = tempSliderValue;
+      const progress =
+        (tempSliderValue / document.getElementById("ne").max) * 100;
+    }
+
+    document.getElementById(
+      "ne"
+    ).style.background = `linear-gradient(to right, #ff6280 ${progress}%, #ccc ${progress}%)`;
+  });
+</script>
+<div class="range">
+  <div class="value" id="valor_fc"></div>
+  <div class="div-range">
+    <input
+      type="range"
+      min="0"
+      max="100"
+      value="0"
+      id="fc"
+      class="range-input"
+    />
+  </div>
+</div>
+<script>
+  document.getElementById("fc").addEventListener("input", (event) => {
+    const tempSliderValue = event.target.value;
+    if (tempSliderValue == 0) {
+      document.getElementById("valor_fc").textContent = "";
+      const progress = 0;
+    } else {
+      document
+        .getElementById("fc")
+        .closest(".range")
+        .style.removeProperty("filter");
+      document.getElementById("valor_fc").textContent = tempSliderValue + "%";
+      const progress =
+        (tempSliderValue / document.getElementById("fc").max) * 100;
+    }
+
+    document.getElementById(
+      "fc"
+    ).style.background = `linear-gradient(to right, #ff6280 ${progress}%, #ccc ${progress}%)`;
+  });
+</script>
+<div class="range">
+  <div class="value" id="valor_l"></div>
+  <div class="div-range">
+    <input
+      type="range"
+      min="0"
+      max="10000"
+      value="0"
+      id="l"
+      class="range-input"
+    />
+  </div>
+</div>
+<script>
+  document.getElementById("l").addEventListener("input", (event) => {
+    const tempSliderValue = event.target.value;
+    if (tempSliderValue == 0) {
+      document.getElementById("valor_l").textContent = "";
+      const progress = 0;
+    } else {
+      document
+        .getElementById("l")
+        .closest(".range")
+        .style.removeProperty("filter");
+      document.getElementById("valor_l").textContent = tempSliderValue;
+      const progress =
+        (tempSliderValue / document.getElementById("l").max) * 100;
+    }
+
+    document.getElementById(
+      "l"
+    ).style.background = `linear-gradient(to right, #ff6280 ${progress}%, #ccc ${progress}%)`;
+  });
+</script>

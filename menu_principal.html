@@ -33,11 +33,13 @@
     document.querySelector(
       '[data-title="text_radiotelescopio"]'
     ).style.display = "none";
-    document.querySelector('[data-title="radiotelescopio"]').style.display =
-      "none";
+    document.querySelector(
+      '[data-title="boton_radiotelescopio"]'
+    ).style.display = "none";
     document.querySelector('[data-title="text_ecuacion"]').style.display =
       "none";
-    document.querySelector('[data-title="ecuacion"]').style.display = "none";
+    document.querySelector('[data-title="boton_ecuacion"]').style.display =
+      "none";
 
     document
       .querySelector('[data-title="cuadro_radiotelescopio"]')
@@ -51,16 +53,18 @@
 
         setTimeout(() => {
           document
-            .querySelector('[data-title="radiotelescopio"]')
+            .querySelector('[data-title="boton_radiotelescopio"]')
             .style.removeProperty("display");
           document
-            .querySelector('[data-title="radiotelescopio"]')
+            .querySelector('[data-title="boton_radiotelescopio"]')
             .classList.add("fade-in-left");
           setTimeout(() => {
             document
-              .querySelector('[data-title="radiotelescopio"]')
+              .querySelector('[data-title="boton_radiotelescopio"]')
               .addEventListener("touchstart", function (event) {
-                console.log("aqui");
+                document
+                  .querySelector('[data-title="radiotelescopio"]')
+                  .click();
                 try {
                   ipcRenderer.send("pagina", "radiotelescopio");
                 } catch {
@@ -83,22 +87,11 @@
 
         setTimeout(() => {
           document
-            .querySelector('[data-title="ecuacion"]')
+            .querySelector('[data-title="boton_ecuacion"]')
             .style.removeProperty("display");
           document
-            .querySelector('[data-title="ecuacion"]')
+            .querySelector('[data-title="boton_ecuacion"]')
             .classList.add("fade-in-left");
-          setTimeout(() => {
-            document
-              .querySelector('[data-title="ecuacion"]')
-              .addEventListener("touchstart", function (event) {
-                try {
-                  ipcRenderer.send("pagina", "ecuacion");
-                } catch {
-                  console.log("electron no se encuentra");
-                }
-              });
-          }, 1000);
         }, 1000);
       });
   }

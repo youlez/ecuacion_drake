@@ -6,18 +6,63 @@
       .querySelector('[data-title="calcular"]')
       .addEventListener("touchstart", function (event) {
         var ne = document.getElementById("ne").value;
-        var Fe = document.getElementById("Fe").value;
-        var L = document.getElementById("L").value;
-        if (ne != "" && Fe != "" && L != "") {
+        var fc = document.getElementById("fc").value;
+        var l = document.getElementById("l").value;
+        if (ne == "" || ne == 0) {
+          document
+            .getElementById("ne")
+            .closest(".genially-view-item").style.overflow = "visible";
+          document.getElementById("ne").closest(".range").style.filter =
+            "drop-shadow(0 0 0.75rem #ff6280)";
+        }
+        if (fc == "" || fc == 0) {
+          document
+            .getElementById("fc")
+            .closest(".genially-view-item").style.overflow = "visible";
+          document.getElementById("fc").closest(".range").style.filter =
+            "drop-shadow(0 0 0.75rem #ff6280)";
+        }
+        if (l == "" || l == 0) {
+          document
+            .getElementById("l")
+            .closest(".genially-view-item").style.overflow = "visible";
+          document.getElementById("l").closest(".range").style.filter =
+            "drop-shadow(0 0 0.75rem #ff6280)";
+        }
+        if (ne != "" && fc != "" && l != "" && ne != 0 && fc != 0 && l != 0) {
           ne = parseInt(ne);
-          Fe = parseInt(Fe) / 100;
-          L = parseInt(L);
+          fc = parseInt(fc) / 100;
+          l = parseInt(l);
           var R = 1.9;
           var fp = 0.0062;
           var fl = 0.5;
           var fi = 0.1;
-          var resultado = R * fp * ne * fl * fi * Fe * L;
+          var resultado = R * fp * ne * fl * fi * fc * l;
           console.log(resultado);
+          document.querySelector('[data-title="calculo"]').click();
+
+          setTimeout(() => {
+            document
+              .querySelector('[data-title="limpiar"]')
+              .addEventListener("touchstart", function (event) {
+                document.getElementById("ne").value = 0;
+                document.getElementById("valor_ne").textContent = "";
+                document.getElementById("fc").value = 0;
+                document.getElementById("valor_fc").textContent = "";
+                document.getElementById("l").value = 0;
+                document.getElementById("valor_l").textContent = "";
+                document
+                  .getElementsByClassName("circle-cancel")[0]
+                  .closest("div")
+                  .click();
+
+                try {
+                  ipcRenderer.send("resultado", "");
+                } catch {
+                  console.log("electron no se encuentra");
+                }
+              });
+          }, 1000);
           try {
             ipcRenderer.send("resultado", resultado);
           } catch {
