@@ -1,17 +1,4 @@
 <style>
-  .fade-in-down {
-    animation: fade-in-down 0.5s linear;
-  }
-  @keyframes fade-in-down {
-    0% {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
   .fade-in {
     animation: fade-in 2s linear;
   }
@@ -29,17 +16,13 @@
     document.getElementsByClassName("container-wrapper-genially").length != 0
   ) {
     document
-      .getElementById("texto")
-      .closest(".genially-animated-wrapper").style.display = "none";
-    document
-      .getElementById("resultado")
-      .closest(".genially-animated-wrapper").style.display = "none";
-    document.querySelector('[data-title="imagen"]').style.display = "none";
-    document
       .getElementById("resultado")
       .closest(
         ".genially-view-group"
       ).childNodes[1].childNodes[0].childNodes[0].childNodes[0].innerHTML = "";
+    document
+      .getElementById("resultado")
+      .closest(".genially-animated-wrapper").style.display = "none";
 
     try {
       ipcRenderer.on("resultado", (e, resultado) => {
@@ -54,55 +37,18 @@
             ).childNodes[1].childNodes[0].childNodes[0].childNodes[0].innerHTML =
             resultado;
 
-          document
-            .getElementById("texto")
-            .closest(".genially-animated-wrapper")
-            .style.removeProperty("display");
-          document
-            .getElementById("texto")
-            .closest(".genially-animated-wrapper")
-            .classList.add("fade-in-down");
-          document
-            .getElementById("resultado")
-            .closest(".genially-animated-wrapper")
-            .style.removeProperty("display");
-          document
-            .getElementById("resultado")
-            .closest(".genially-animated-wrapper")
-            .classList.add("fade-in");
-          document
-            .querySelector('[data-title="imagen"]')
-            .style.removeProperty("display");
-          document
-            .querySelector('[data-title="imagen"]')
-            .classList.add("fade-in");
+          setTimeout(() => {
+            document
+              .getElementById("resultado")
+              .closest(".genially-animated-wrapper")
+              .style.removeProperty("display");
+            document
+              .getElementById("resultado")
+              .closest(".genially-animated-wrapper")
+              .classList.add("fade-in");
+          }, 1500);
         } else {
-          document
-            .getElementById("texto")
-            .closest(".genially-animated-wrapper").style.display = "none";
-          document
-            .getElementById("resultado")
-            .closest(".genially-animated-wrapper").style.display = "none";
-          document.querySelector('[data-title="imagen"]').style.display =
-            "none";
-          document
-            .getElementById("resultado")
-            .closest(
-              ".genially-view-group"
-            ).childNodes[1].childNodes[0].childNodes[0].childNodes[0].innerHTML =
-            "";
-
-          document
-            .getElementById("texto")
-            .closest(".genially-animated-wrapper")
-            .classList.remove("fade-in-down");
-          document
-            .getElementById("resultado")
-            .closest(".genially-animated-wrapper")
-            .classList.remove("fade-in");
-          document
-            .querySelector('[data-title="imagen"]')
-            .classList.remove("fade-in");
+          document.querySelector('[data-title="anterior"]').click();
         }
       });
     } catch {

@@ -64,6 +64,7 @@
               });
           }, 1000);
           try {
+            ipcRenderer.send("pagina", "siguiente");
             ipcRenderer.send("resultado", resultado);
           } catch {
             console.log("electron no se encuentra");
