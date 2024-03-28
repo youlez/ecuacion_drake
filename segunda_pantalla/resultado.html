@@ -1,0 +1,58 @@
+<style>
+  .fade-in {
+    animation: fade-in 2s linear;
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+</style>
+<script>
+  if (
+    document.getElementsByClassName("container-wrapper-genially").length != 0
+  ) {
+    document
+      .getElementById("resultado")
+      .closest(
+        ".genially-view-group"
+      ).childNodes[1].childNodes[0].childNodes[0].childNodes[0].innerHTML = "";
+    document
+      .getElementById("resultado")
+      .closest(".genially-animated-wrapper").style.display = "none";
+
+    try {
+      ipcRenderer.on("resultado", (e, resultado) => {
+        console.log(resultado);
+        if (resultado != "") {
+          resultado = Math.round(resultado * 100000) / 100000;
+          console.log(resultado);
+          document
+            .getElementById("resultado")
+            .closest(
+              ".genially-view-group"
+            ).childNodes[1].childNodes[0].childNodes[0].childNodes[0].innerHTML =
+            resultado;
+
+          setTimeout(() => {
+            document
+              .getElementById("resultado")
+              .closest(".genially-animated-wrapper")
+              .style.removeProperty("display");
+            document
+              .getElementById("resultado")
+              .closest(".genially-animated-wrapper")
+              .classList.add("fade-in");
+          }, 1500);
+        } else {
+          document.querySelector('[data-title="convenciones"]').click();
+        }
+      });
+    } catch {
+      console.log("electron no se encuentra");
+    }
+  }
+</script>

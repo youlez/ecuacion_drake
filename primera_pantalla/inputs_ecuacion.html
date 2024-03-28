@@ -1,0 +1,96 @@
+<div class="range">
+  <div class="value" id="valor_ne"></div>
+  <div class="div-range">
+    <input type="range" min="0" max="4" value="0" id="ne" class="range-input" />
+  </div>
+</div>
+<script>
+  document.getElementById("ne").addEventListener("input", (event) => {
+    const tempSliderValue = event.target.value;
+
+    if (tempSliderValue == 0) {
+      document.getElementById("valor_ne").textContent = "";
+      const progress = 0;
+    } else {
+      document
+        .getElementById("ne")
+        .closest(".range")
+        .style.removeProperty("filter");
+      document.getElementById("valor_ne").textContent = tempSliderValue;
+      const progress =
+        (tempSliderValue / document.getElementById("ne").max) * 100;
+    }
+
+    document.getElementById(
+      "ne"
+    ).style.background = `linear-gradient(to right, #ff6280 ${progress}%, #ccc ${progress}%)`;
+  });
+</script>
+<div class="range">
+  <div class="value" id="valor_fc"></div>
+  <div class="div-range">
+    <input
+      type="range"
+      min="0"
+      max="100"
+      value="0"
+      id="fc"
+      class="range-input"
+    />
+  </div>
+</div>
+<script>
+  document.getElementById("fc").addEventListener("input", (event) => {
+    const tempSliderValue = event.target.value;
+    if (tempSliderValue == 0) {
+      document.getElementById("valor_fc").textContent = "";
+      const progress = 0;
+    } else {
+      document
+        .getElementById("fc")
+        .closest(".range")
+        .style.removeProperty("filter");
+      document.getElementById("valor_fc").textContent = tempSliderValue + "%";
+      const progress =
+        (tempSliderValue / document.getElementById("fc").max) * 100;
+    }
+
+    document.getElementById(
+      "fc"
+    ).style.background = `linear-gradient(to right, #ff6280 ${progress}%, #ccc ${progress}%)`;
+  });
+</script>
+<div class="range">
+  <div class="value" id="valor_l"></div>
+  <div class="div-range">
+    <input
+      type="range"
+      min="0"
+      max="10000"
+      value="0"
+      id="l"
+      class="range-input"
+    />
+  </div>
+</div>
+<script>
+  document.getElementById("l").addEventListener("input", (event) => {
+    const tempSliderValue = event.target.value;
+    if (tempSliderValue == 0) {
+      document.getElementById("valor_l").textContent = "";
+      const progress = 0;
+    } else {
+      document
+        .getElementById("l")
+        .closest(".range")
+        .style.removeProperty("filter");
+      document.getElementById("valor_l").textContent = tempSliderValue;
+      const progress =
+        (tempSliderValue / document.getElementById("l").max) * 100;
+    }
+
+    document.getElementById(
+      "l"
+    ).style.background = `linear-gradient(to right, #ff6280 ${progress}%, #ccc ${progress}%)`;
+  });
+</script>

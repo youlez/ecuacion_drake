@@ -1,0 +1,33 @@
+<script>
+  if (
+    document.getElementsByClassName("container-wrapper-genially").length != 0
+  ) {
+    document
+      .querySelector('[data-title="menu_principal"]')
+      .addEventListener("touchstart", function (event) {
+        setTimeout(() => {
+          try {
+            ipcRenderer.send("pagina", "inicio");
+          } catch {
+            console.log("electron no se encuentra");
+          }
+          document.querySelector('[data-title="inicio"]').click();
+        }, 1000);
+      });
+
+    document.querySelector('[data-title="siguiente"]').addEventListener(
+      "touchstart",
+      function (event) {
+        setTimeout(() => {
+          try {
+            ipcRenderer.send("pagina", "radiotelescopio");
+          } catch {
+            console.log("electron no se encuentra");
+          }
+          document.querySelector('[data-title="radiotelescopios"]').click();
+        }, 1000);
+      },
+      500
+    );
+  }
+</script>

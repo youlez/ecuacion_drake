@@ -1,0 +1,138 @@
+<style>
+  .range-input {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 90%;
+    outline: none;
+    border-radius: 15px;
+    height: 3px;
+    background: #ccc;
+  }
+
+  .range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 15px;
+    width: 15px;
+    background-color: #6df2ed;
+    box-shadow: 0 0 0 10px rgba(109, 242, 237, 0.2);
+    border-radius: 50%;
+    border: none;
+    transition: 0.2s ease-in-out;
+  }
+
+  .value {
+    min-height: 90px;
+    width: 80%;
+    border: 2px #6df2ed solid !important;
+    border-radius: 15px 15px 0 0;
+    background-color: #352967;
+    color: white;
+    font-family: Montserrat, "Source Sans Pro", _fb_;
+    font-weight: bold;
+    font-size: 60px;
+    text-align: center;
+    font-style: italic;
+    margin: 0 auto !important;
+  }
+  .range {
+    width: 300px;
+  }
+  .div-range {
+    width: 100%;
+    margin-top: -5px !important;
+    padding: 30px 0px !important;
+    display: flex;
+    justify-content: center;
+    border: 2px #ff6280 solid !important;
+    background-color: #352967;
+    border-radius: 15px;
+  }
+</style>
+<script>
+  if (
+    document.getElementsByClassName("container-wrapper-genially").length != 0
+  ) {
+    document
+      .querySelector('[data-title="calcular"]')
+      .addEventListener("touchstart", function (event) {
+        var ne = document.getElementById("ne").value;
+        var fc = document.getElementById("fc").value;
+        var l = document.getElementById("l").value;
+        if (ne == "" || ne == 0) {
+          document
+            .getElementById("ne")
+            .closest(".genially-view-item").style.overflow = "visible";
+          document.getElementById("ne").closest(".range").style.filter =
+            "drop-shadow(0 0 0.75rem #ff6280)";
+        }
+        if (fc == "" || fc == 0) {
+          document
+            .getElementById("fc")
+            .closest(".genially-view-item").style.overflow = "visible";
+          document.getElementById("fc").closest(".range").style.filter =
+            "drop-shadow(0 0 0.75rem #ff6280)";
+        }
+        if (l == "" || l == 0) {
+          document
+            .getElementById("l")
+            .closest(".genially-view-item").style.overflow = "visible";
+          document.getElementById("l").closest(".range").style.filter =
+            "drop-shadow(0 0 0.75rem #ff6280)";
+        }
+        if (ne != "" && fc != "" && l != "" && ne != 0 && fc != 0 && l != 0) {
+          ne = parseInt(ne);
+          fc = parseInt(fc) / 100;
+          l = parseInt(l);
+          var R = 1.9;
+          var fp = 0.0062;
+          var fl = 0.5;
+          var fi = 0.1;
+          var resultado = R * fp * ne * fl * fi * fc * l;
+          console.log(resultado);
+
+          setTimeout(() => {
+            document.querySelector('[data-title="calculo"]').click();
+            document
+              .querySelector('[data-title="limpiar"]')
+              .addEventListener("touchstart", function (event) {
+                document.getElementById("ne").value = 0;
+                document.getElementById("valor_ne").textContent = "";
+                document.getElementById("fc").value = 0;
+                document.getElementById("valor_fc").textContent = "";
+                document.getElementById("l").value = 0;
+                document.getElementById("valor_l").textContent = "";
+                document
+                  .getElementsByClassName("circle-cancel")[0]
+                  .closest("div")
+                  .click();
+
+                try {
+                  ipcRenderer.send("resultado", "");
+                } catch {
+                  console.log("electron no se encuentra");
+                }
+              });
+          }, 500);
+          try {
+            ipcRenderer.send("pagina", "resultado");
+            ipcRenderer.send("resultado", resultado);
+          } catch {
+            console.log("electron no se encuentra");
+          }
+        }
+      });
+    document
+      .querySelector('[data-title="menu_principal"]')
+      .addEventListener("touchstart", function (event) {
+        setTimeout(() => {
+          try {
+            ipcRenderer.send("pagina", "inicio");
+          } catch {
+            console.log("electron no se encuentra");
+          }
+          document.querySelector('[data-title="inicio"]').click();
+        }, 1000);
+      });
+  }
+</script>
